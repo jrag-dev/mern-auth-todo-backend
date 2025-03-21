@@ -7,7 +7,7 @@ const sign = (payload, isAccessToken) => {
     isAccessToken ? process.env.ACCESS_TOKEN_SECRET : process.env.REFRESK_TOKEN_SECRET, 
     { 
       algorithm: 'HS256',
-      expiresIn: 3600
+      expiresIn: '1h'
     }
   );
 }
@@ -18,4 +18,12 @@ export const createAccessToken = (data) => {
 
 export const createRefreshToken =  (data) => {
   return sign({ data }, false)
+}
+
+export const verifyAccessToken = (token) => {
+  return jsonwebtoken.verify(token, process.env.ACCESS_TOKEN_SECRET);
+}
+
+export const verifyRefreshToken = (token) => {
+  return jsonwebtoken.verify(token, process.env.REFRESK_TOKEN_SECRET);
 }

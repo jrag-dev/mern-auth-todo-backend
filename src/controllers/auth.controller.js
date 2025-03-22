@@ -22,9 +22,22 @@ class AuthController {
       )
     }
 
-    const userAlreadyRegistered = await User.findOne({ email });
-    if (userAlreadyRegistered) {
-      const error = new Error('User already registered');
+    const emailAlreadyRegistered = await User.findOne({ email });
+    if (emailAlreadyRegistered) {
+      const error = new Error('Email already registered');
+      return res.status(400).json(
+        jsonResponse(400,
+          {
+            message: error.message,
+            success: false
+          }
+        )
+      );
+    }
+
+    const usernameAlreadyRegistered = await User.findOne({ username });
+      if (usernameAlreadyRegistered) {
+      const error = new Error('Username already registered');
       return res.status(400).json(
         jsonResponse(400,
           {

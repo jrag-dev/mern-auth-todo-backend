@@ -6,6 +6,7 @@ import 'dotenv/config';
 
 import './config/db.js'
 import authRoutes from './routes/auth.routes.js';
+import taskRoutes from './routes/task.routes.js';
 
 class App {
   
@@ -25,6 +26,7 @@ class App {
 
   routes() {
     this.app.use('/api/v1/auth', authRoutes)
+    this.app.use('/api/v1/tasks', taskRoutes)
   }
 }
 

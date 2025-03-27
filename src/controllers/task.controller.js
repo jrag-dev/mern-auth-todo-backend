@@ -53,10 +53,11 @@ class TaskController {
 
     try {
       const tasks = await Task.find({ user: req.user._id });
+
       res.status(200).json(
         jsonResponse(200,
           {
-            message: 'User Tasks',
+            message: tasks.length > 0 ? 'Task list loaded' : 'The task list is empty',
             success: true,
             tasks,
           }
@@ -157,7 +158,10 @@ class TaskController {
     const { id } = req.params;
     const userId = req.user._id;
 
+    console.log(id)
+
     const task = await Task.findOne({ _id: id, user: userId });
+    console.log(task)
     if (!task) {
       return res.status(404).json(
         jsonResponse(404, {

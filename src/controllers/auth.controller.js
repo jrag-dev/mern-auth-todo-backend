@@ -174,11 +174,27 @@ class AuthController {
   
   async signout(req, res) {
     try {
-      res.status(201).json(
-        {
-          message: 'User signout successfully',
-          success: true
-        }
+      const refreshToken = getTokenFromHeaders(req.headers);
+      console.log('Refresh Token: ', refreshToken)
+
+      if (!refreshToken) {
+        return res.status(400).json(
+          jsonResponse(400,{
+            message: 'You do not singout',
+            success: false
+          })
+        )
+      }
+
+      await Token.findOneAndDelete({ token: refreshToken });
+      
+      res.status(200).json(
+        jsonResponse(200,
+          {
+            message: 'User signout successfully',
+            success: true
+          }
+        )
       )
     } catch (err) {
       console.log(err)

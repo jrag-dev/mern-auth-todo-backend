@@ -5,6 +5,8 @@ import { verifyAccessToken } from "../lib/jwt.js";
 export function authenticate(req, res, next) {
   const token = getTokenFromHeaders(req.headers);
 
+  console.log('Token Sending: ', req.headers)
+
   if (token) {
     const decoded = verifyAccessToken(token)
     if (decoded) {
